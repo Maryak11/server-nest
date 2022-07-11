@@ -22,6 +22,12 @@ export class JwtAuthGuard implements CanActivate {
       const bearer = authHeader.split(' ')[0];
       const token = authHeader.split(' ')[1];
 
+      if (!req.headers.authorization) {
+        throw new UnauthorizedException({
+          message: 'Ба бла',
+        });
+      }
+
       if (bearer !== 'Bearer' || !token) {
         throw new UnauthorizedException({
           message: 'Пользователь не авторизован',
@@ -35,7 +41,7 @@ export class JwtAuthGuard implements CanActivate {
       return true;
     } catch (err) {
       throw new UnauthorizedException({
-        message: 'Пользователь не авторизован',
+        message: 'server error',
       });
     }
   }
